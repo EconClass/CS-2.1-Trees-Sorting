@@ -6,8 +6,12 @@ def is_sorted(items):
         Were `n` is the number of items in the given list `items`
         Running time: O(n), when the list is already sorted
         Memory usage: O(1), in all cases"""
+    limit = len(items)
 
-    for i in range(1, len(items)):
+    if limit < 2:
+        return True
+
+    for i in range(1, limit):
         if items[i-1] > items[i]:
             return False
     return True
@@ -20,6 +24,10 @@ def bubble_sort(items):
         where a swap is performed every iteration through the list
     Memory usage: O(1), under all conditions"""
     limit = len(items)
+
+    if limit < 2:
+        return True
+
     while True:  # O(n)
         swapped = False
         for i in range(1, limit):  # O(n)
@@ -38,6 +46,10 @@ def selection_sort(items):
     Running time: O(n^2) Under all conditions
     Memory usage: O(1) Under all conditions"""
     limit = len(items)
+
+    if limit < 2:
+        return True
+
     start = 0
     while True:
         if start + 1 == limit:
@@ -59,7 +71,12 @@ def insertion_sort(items):
     order in front of items, and repeating until all items are in order.
     Running time: O(n^2) Reverse ordered list
     Memory usage: O(1) Under all conditions"""
-    for i in range(1, len(items)):
+    limit = len(items)
+
+    if limit < 2:
+        return True
+
+    for i in range(1, limit):
         tmp = items[i]
         to_compare = i
         # Before we reach the begining of the list and

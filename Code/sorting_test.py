@@ -1,7 +1,8 @@
 #!python
 
 from sorting import random_ints
-from sorting_iterative import is_sorted, bubble_sort, selection_sort, insertion_sort
+from sorting_iterative import is_sorted, bubble_sort, \
+    selection_sort, insertion_sort
 from sorting_recursive import split_sort_merge, merge_sort, quick_sort
 from sorting_integer import counting_sort, bucket_sort
 import unittest
@@ -16,9 +17,10 @@ class IsSortedTest(unittest.TestCase):
         assert is_sorted([3, 3]) is True  # Duplicate items are in order
         assert is_sorted([3, 5]) is True
         assert is_sorted([3, 5, 7]) is True
-        # TODO: Write more positive test cases with assert is True statements
-        # You'll need a lot more than this to test sorting algorithm robustness
-        # ...
+        # Custom
+        assert is_sorted([-7, -5, -3]) is True
+        assert is_sorted([-3, 3, 7]) is True
+        assert is_sorted([-3, 0, 7]) is True
 
     def test_is_sorted_on_unsorted_integers(self):
         # Negative test cases (counterexamples) with lists of unsorted integers
@@ -215,7 +217,7 @@ def get_sort_function():
 
 
 # If using PyTest, change this variable to the sort function you want to test
-sort = bubble_sort
+sort = selection_sort
 
 
 if __name__ == '__main__':
