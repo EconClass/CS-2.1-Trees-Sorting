@@ -20,8 +20,7 @@ def is_sorted(items):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    Running time: O(n^2),
-        where a swap is performed every iteration through the list
+    Running time: O(n^2), Reversed order worst case
     Memory usage: O(1), under all conditions"""
     limit = len(items)
 

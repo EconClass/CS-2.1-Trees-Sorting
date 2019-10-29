@@ -98,9 +98,11 @@ class IntegerSortTest(unittest.TestCase):
         items3 = [5, 7, 3]
         sort(items3)
         assert items3 == [3, 5, 7]
-        # TODO: Write more test cases with assert equal list statements
+        # Write more test cases with assert equal list statements
         # You'll need a lot more than this to test sorting algorithm robustness
-        # ...
+        items4 = [2, 3, 4, 1, 5]
+        sort(items4)
+        assert items4 == [1, 2, 3, 4, 5]
 
     def test_sort_on_small_lists_of_integers_with_duplicates(self):
         items1 = [3, 3]
@@ -217,7 +219,7 @@ def get_sort_function():
 
 
 # If using PyTest, change this variable to the sort function you want to test
-sort = selection_sort
+sort = split_sort_merge
 
 
 if __name__ == '__main__':

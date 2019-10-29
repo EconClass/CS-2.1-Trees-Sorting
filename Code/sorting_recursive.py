@@ -1,5 +1,7 @@
 #!python
 
+from sorting_iterative import insertion_sort
+
 
 def merge(items1, items2):
     """Merge given lists of items, each assumed to already be in sorted order,
@@ -9,6 +11,32 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
+    head1 = 0
+    head2 = 0
+    final = []
+    # print('merge inputs')
+    # print(f'left: {items1}')
+    # print(f'right: {items2}')
+    while head1 < len(items1) and head2 < len(items2):
+        small_1 = items1[head1]
+        small_2 = items2[head2]
+        if small_1 < small_2:
+            final.append(small_1)
+            head1 += 1
+        else:
+            final.append(small_2)
+            head2 += 1
+        # print(f"merge final: {final}")
+
+    while head1 < len(items1):
+        final.append(items1[head1])
+        head1 += 1
+
+    while head2 < len(items2):
+        final.append(items2[head2])
+        head2 += 1
+    # print(f"merge final outer: {final}")
+    return final
 
 
 def split_sort_merge(items):
@@ -17,9 +45,24 @@ def split_sort_merge(items):
     a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half using any other sorting algorithm
-    # TODO: Merge sorted halves into one list in sorted order
+    # Split items list into approximately equal halves
+    # Sort each half using any other sorting algorithm
+    # Merge sorted halves into one list in sorted order
+    middle = len(items) // 2
+
+    left = items[:middle]
+    insertion_sort(left)
+
+    right = items[middle:]
+    insertion_sort(right)
+
+    merged = merge(left, right)
+
+    assert len(items) == len(merged)
+
+    # items = merged
+    for i in range(len(items)):
+        items[i] = merged[i]
 
 
 def merge_sort(items):
