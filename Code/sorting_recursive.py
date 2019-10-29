@@ -6,18 +6,18 @@ from sorting_iterative import insertion_sort
 def merge(items1, items2):
     """Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
+    Running time: O(n + m)
+        We have to iterate through all items in both lists in any scenario
+    Memory usage: O(n + m)
+        New memory is created to store new ordered list
+        New ordered list grows until it contains all items from both inputs"""
     head1 = 0
     head2 = 0
     final = []
-    # print('merge inputs')
-    # print(f'left: {items1}')
-    # print(f'right: {items2}')
+
+    # Repeat until one list is empty
     while head1 < len(items1) and head2 < len(items2):
+        # Find minimum item in both lists and append it to new list
         small_1 = items1[head1]
         small_2 = items2[head2]
         if small_1 < small_2:
@@ -26,8 +26,8 @@ def merge(items1, items2):
         else:
             final.append(small_2)
             head2 += 1
-        # print(f"merge final: {final}")
 
+    # Append remaining items in non-empty list to new list
     while head1 < len(items1):
         final.append(items1[head1])
         head1 += 1
@@ -35,7 +35,7 @@ def merge(items1, items2):
     while head2 < len(items2):
         final.append(items2[head2])
         head2 += 1
-    # print(f"merge final outer: {final}")
+
     return final
 
 
@@ -43,24 +43,24 @@ def split_sort_merge(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each with an iterative sorting algorithm, and merging results into
     a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O((n/2)^2) -> O(n^2)
+        When the left and right halves are in reverse order
+    Memory usage: O(n)
+        New memory is created to store new ordered list"""
     # Split items list into approximately equal halves
-    # Sort each half using any other sorting algorithm
-    # Merge sorted halves into one list in sorted order
     middle = len(items) // 2
-
     left = items[:middle]
-    insertion_sort(left)
-
     right = items[middle:]
-    insertion_sort(right)
 
+    # Sort each half using any other sorting algorithm
+    insertion_sort(left)  # O(n^2)
+    insertion_sort(right)  # O(n^2)
+
+    # Merge sorted halves into one list in sorted order
     merged = merge(left, right)
 
     assert len(items) == len(merged)
-
-    # items = merged
+    # Overwrite content of original list with content of sorted list
     for i in range(len(items)):
         items[i] = merged[i]
 
@@ -70,10 +70,26 @@ def merge_sort(items):
     sorting each recursively, and merging results into a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half by recursively calling merge sort
-    # TODO: Merge sorted halves into one list in sorted order
+    # Check if list is so small it's already sorted (base case)
+    if len(items) < 2:
+        return items
+
+    # Split items list into approximately equal halves
+    middle = len(items) // 2
+    left = items[:middle]
+    right = items[middle:]
+
+    # Sort each half by recursively calling merge sort
+    left = merge_sort(left)
+    right = merge_sort(right)
+
+    # Merge sorted halves into one list in sorted order
+    merged = merge(left, right)
+
+    # Overwrite content of original list with content of sorted list
+    for i in range(len(items)):
+        items[i] = merged[i]
+    return items
 
 
 def partition(items, low, high):
