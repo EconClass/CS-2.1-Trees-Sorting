@@ -68,26 +68,32 @@ def split_sort_merge(items):
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(log(n))
+        We are continuously iterating through half of the given list
+        With each successive call's given list shrinks by half
+    Memory usage: O(n)
+        We create a sorted copy of the given list at every function call
+        except for the call at the base case
+        In the worst case the sorted copy is equal to the original in size"""
+
     # Check if list is so small it's already sorted (base case)
-    if len(items) < 2:
+    if len(items) < 2:  # O(1)
         return items
 
     # Split items list into approximately equal halves
     middle = len(items) // 2
-    left = items[:middle]
-    right = items[middle:]
+    left = items[:middle]  # O(n/2)
+    right = items[middle:]  # O(n/2)
 
     # Sort each half by recursively calling merge sort
-    left = merge_sort(left)
-    right = merge_sort(right)
+    left = merge_sort(left)  # O(n/2) -> O(l)
+    right = merge_sort(right)  # O(n/2) -> O(r)
 
     # Merge sorted halves into one list in sorted order
-    merged = merge(left, right)
+    merged = merge(left, right)  # O(l + r) -> O(n/2 + n/2) -> O(n)
 
     # Overwrite content of original list with content of sorted list
-    for i in range(len(items)):
+    for i in range(len(items)):  # O(n)
         items[i] = merged[i]
     return items
 
