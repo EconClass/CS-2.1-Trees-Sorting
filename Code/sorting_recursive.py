@@ -1,6 +1,6 @@
 #!python
 
-from sorting_iterative import insertion_sort
+from sorting_iterative import insertion_sort, bubble_sort
 
 
 def merge(items1, items2):
@@ -54,21 +54,18 @@ def split_sort_merge(items):
 
     # Sort each half using any other sorting algorithm
     insertion_sort(left)  # O(n^2)
-    insertion_sort(right)  # O(n^2)
+    bubble_sort(right)  # O(n^2)
 
     # Merge sorted halves into one list in sorted order
-    merged = merge(left, right)
-
-    assert len(items) == len(merged)
     # Overwrite content of original list with content of sorted list
-    for i in range(len(items)):
-        items[i] = merged[i]
+    items[:] = merge(left, right)
 
 
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    Running time: O(log(n))
+    Running time: O(n*2*log(n)) -> O(n*log(n))
+        Same runtime in all cases
         We are continuously iterating through half of the given list
         With each successive call's given list shrinks by half
     Memory usage: O(n)
@@ -90,11 +87,8 @@ def merge_sort(items):
     right = merge_sort(right)  # O(n/2) -> O(r)
 
     # Merge sorted halves into one list in sorted order
-    merged = merge(left, right)  # O(l + r) -> O(n/2 + n/2) -> O(n)
-
     # Overwrite content of original list with content of sorted list
-    for i in range(len(items)):  # O(n)
-        items[i] = merged[i]
+    items[:] = merge(left, right)  # O(l + r) = O(n/2 + n/2) -> O(n)
     return items
 
 
@@ -105,11 +99,25 @@ def partition(items, low, high):
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Choose a pivot any way and document your method in docstring above
-    # TODO: Loop through all items in range [low...high]
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
+    # Choose a pivot any way and document your method in docstring above
+    pivot = low
+    to_swap = low + 1
+
+    # Loop through all items in range [low...high]
+    for i in range(low + 1, high):
+
+        # Move items less than pivot into front of range [low...p-1]
+        if items[i] < items[pivot]:
+
+            # Move items greater than pivot into back of range [p+1...high]
+            items[to_swap], items[i] = items[i], items[to_swap]
+            to_swap += 1
+
+    # Move pivot item into final position [p] and return index p
+    items[low], items[to_swap - 1] = items[to_swap - 1], items[low]
+
+    # Return index after in-place partitioning in range [low...high]
+    return to_swap - 1
 
 
 def quick_sort(items, low=None, high=None):
@@ -118,7 +126,17 @@ def quick_sort(items, low=None, high=None):
     TODO: Best case running time: ??? Why and under what conditions?
     TODO: Worst case running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
+    # Check if high and low range bounds have default values (not given)
+    if low is None and high is None:
+        low = 0
+        high = len(items)
+    # Check if list or range is so small it's already sorted (base case)
+    delta = high - low
+    if delta < 2:
+        return
+    # Partition items in-place around a pivot and get index of pivot
+    piv_dex = partition(items, low, high)
+
+    # Sort each sublist range by recursively calling quick sort
+    quick_sort(items, low, piv_dex)
+    quick_sort(items, piv_dex + 1, high)
