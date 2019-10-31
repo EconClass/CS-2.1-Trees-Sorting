@@ -94,11 +94,14 @@ def merge_sort(items):
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
-    `[low...high]` by choosing a pivot (TODO: document your method here) from
+    `[low...high]` by choosing a pivot, which is always the lowest index from
     that range, moving pivot into index `p`, items less than pivot into range
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(log(n))
+        Each successive partition proportionally reduces
+        the number of items to iterate through
+    Memory usage: O(1)
+        New memory created are constant in all cases"""
     # Choose a pivot any way and document your method in docstring above
     pivot = low
     to_swap = low + 1
@@ -123,9 +126,13 @@ def partition(items, low, high):
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
     around a pivot item and recursively sorting each remaining sublist range.
-    TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Best case running time: O(n*log(n))
+        We make `log(n)` iterations for `n` number of items in a given list
+    Worst case running time: O(n^2)
+        Quick Sort takes `n` iterations for `n` amount of items if,
+        the list is reversed
+    Memory usage: O(1)
+        We only create references to positions in the given list"""
     # Check if high and low range bounds have default values (not given)
     if low is None and high is None:
         low = 0
