@@ -65,15 +65,15 @@ def main():
         start_time = time.time()
 
         # Set up autocomplete and mark the clock
-        structure = autocomplete_setup(vocabulary)
+        structure = autocomplete_setup(vocabulary, 'trie')
         setup_time = time.time()
 
         # Run autocomplete and mark the clock
         completions = autocomplete(prefix, structure)
         end_time = time.time()
-
+        completions = ', '.join(completions)
         print('Vocabulary size: {}'.format(len(vocabulary)))
-        print('Completions of {}: {}'.format(prefix, ', '.join(completions)))
+        print(f'Completions of {prefix}: {completions}')
         print()
         print('Initial setup time: {:.6f} sec'.format(setup_time - start_time))
         print('Autocomplete time:  {:.6f} sec'.format(end_time - setup_time))
@@ -96,7 +96,7 @@ def main():
         for prefix in prefixes:
             completions = autocomplete(prefix, structure)
             num_completions += len(completions)
-            # print('Completions of {}: {}'.format(prefix, ', '.join(completions)))
+            # print(f'Completions of {prefix}: {', '.join(completions)}')
 
         # Mark the clock
         end_time = time.time()
