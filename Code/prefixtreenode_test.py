@@ -15,7 +15,7 @@ class PrefixTreeNodeTest(unittest.TestCase):
         # Verify children nodes structure
         assert isinstance(node.children, PrefixTreeNode.CHILDREN_TYPE)
         assert node.occupied == 0
-        # assert node.children == PrefixTreeNode.CHILDREN_TYPE()
+        assert node.children == [None] * 26
         # Verify terminal boolean
         assert isinstance(node.terminal, bool)
         assert node.terminal is False

@@ -20,7 +20,7 @@ class PrefixTreeNode:
         # Data structure to associate character keys to children node values
         self.children = PrefixTreeNode.CHILDREN_TYPE()
         self.children.append(None)
-        self.children = self.children * 27
+        self.children = self.children * 26
 
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
@@ -57,13 +57,13 @@ class PrefixTreeNode:
     def add_child(self, character, child_node):
         """Add the given character and child node as a child of this node, or
         raise ValueError if given character is amongst this node's children."""
-        if character != '':
-            index = ord(character.upper()) - 65
-        else:
-            index = 26
+        # if character != '':
+        #     index = ord(character.upper()) - 65
+        # else:
+        #     index = 26
         if not self.has_child(character):
             # Add given character and child node to this node's children
-            # index = ord(character.upper()) - 65
+            index = ord(character.upper()) - 65
             self.children[index] = child_node
             self.occupied += 1
         else:

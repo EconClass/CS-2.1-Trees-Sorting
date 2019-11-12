@@ -42,7 +42,7 @@ class PrefixTree:
         current = self.root
         for letter in string.upper():
             index = ord(letter) - 65
-            if not current.children[index]:
+            if not current.has_child(letter):
                 return False
             current = current.children[index]
         return current.terminal
@@ -50,11 +50,17 @@ class PrefixTree:
     def insert(self, string):
         """Insert the given string into this prefix tree."""
         current = self.root
-        for letter in string.upper():
+        up_string = string.upper()
+        for letter in up_string:
             index = ord(letter) - 65
-            current.children[index] = PrefixTreeNode(letter)
+            if current.children[index] is not None:
+                current = current.children[index]
+                continue
+            current.add_child(letter, PrefixTreeNode(letter))
             current = current.children[index]
-        current.terminal = True
+        if not current.terminal:
+            current.terminal = True
+            self.size += 1
 
     def _find_node(self, string):
         """Return a tuple containing the node that terminates the given string
