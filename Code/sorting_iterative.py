@@ -50,9 +50,7 @@ def selection_sort(items):
         return True
 
     start = 0
-    while True:
-        if start + 1 == limit:
-            break
+    while start + 1 < limit:
         min_dex = start
         to_swap = False
         for i in range(start, limit):

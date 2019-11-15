@@ -214,7 +214,7 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.contains('Z') is False
 
     def test_complete(self):
-        strings = ['ABC', 'ABD', 'A', 'XYZ']
+        strings = ['ABC', 'ABD', 'A', 'XYZ', 'HELLO', 'HELP']
         tree = PrefixTree(strings)
         # Verify completions for all substrings
         assert tree.complete('ABC') == ['ABC']
@@ -232,6 +232,8 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.complete('X') == ['XYZ']
         assert tree.complete('Y') == []
         assert tree.complete('Z') == []
+
+        assert tree.complete('HEL') == ['HELLO', 'HELP']
 
     def test_strings(self):
         tree = PrefixTree()
