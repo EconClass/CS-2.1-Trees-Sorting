@@ -22,7 +22,7 @@ class BinaryMinHeap(object):
     def is_empty(self):
         """Return True if this heap is empty, or False otherwise."""
         # TODO: Check if empty based on how many items are in the list
-        # ...
+        return not self.items
 
     def size(self):
         """Return the number of items in this heap."""
@@ -89,15 +89,19 @@ class BinaryMinHeap(object):
             return  # This index is the root node (does not have a parent)
         if not (0 <= index <= self._last_index()):
             raise IndexError('Invalid index: {}'.format(index))
+
         # Get the item's value
         item = self.items[index]
+
         # Get the parent's index and value
         parent_index = self._parent_index(index)
         parent_item = self.items[parent_index]
-        # TODO: Swap this item with parent item if values are out of order
-        # ...
-        # TODO: Recursively bubble up again if necessary
-        # ...
+
+        # Swap this item with parent item if values are out of order
+        if parent_item > item:
+            self.items[parent_index], self.items[index] = self.items[index], self.items[parent_index]
+            # Recursively bubble up again if necessary
+            self._bubble_up(parent_index)
 
     def _bubble_down(self, index):
         """Ensure the heap ordering property is true below the given index,
